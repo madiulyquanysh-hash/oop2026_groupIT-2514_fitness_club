@@ -1,4 +1,4 @@
-package edu.aitu.oop3.db.data.data;
+package edu.aitu.oop3.db.data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
