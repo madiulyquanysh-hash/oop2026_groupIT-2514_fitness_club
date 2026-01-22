@@ -17,7 +17,12 @@ public class RegistrationAndBooking {
     private void registerMember() {
         System.out.print("Enter name: "); String name = scanner.nextLine();
         System.out.print("Enter email: "); String email = scanner.nextLine();
-        System.out.print("Enter Membership Type ID (1-Standard, 2-Premium): ");
+        System.out.println("Enter Membership Type: ");
+        System.out.println("1-Standard");
+        System.out.println("2-Premium");
+        System.out.println("3-Monthly quota subscription");
+        System.out.println("4-YEarly quota subscription");
+        System.out.println("--->");
         int typeId = scanner.nextInt();
 
         String sql = "INSERT INTO members (name, email, membership_type_id) VALUES (?, ?, ?)";
@@ -31,18 +36,48 @@ public class RegistrationAndBooking {
     }
 
     private void bookClass() {
-        System.out.println("Available classes and instructors:");
+        System.out.println("--- Fast Registration & Booking ---");
+        System.out.print("Enter Name: "); String name = scanner.nextLine();
+        System.out.print("Enter Email: "); String email = scanner.nextLine();
+        System.out.println("Enter Membership Type: ");
+        System.out.println("1-Standard");
+        System.out.println("2-Premium");
+        System.out.println("3-Monthly quota subscription");
+        System.out.println("4-YEarly quota subscription");
+        System.out.println("--->"); int typeId = scanner.nextInt();
+        System.out.println("Choose Instructor: ");
+        System.out.println("1 = Fitness" + "|" + "Without instruc");
+        System.out.println("2 = Fitness" + "|" + "Aigerim");
+        System.out.println("3 = Boxing" + "|" + "Nurmahammed");
+        System.out.println("4 = Dance" + "|" + "Miras");
+        System.out.println("5 = Yoga" + "|" + "Alam");
+        System.out.println("6 = Pilates" + "|" + "Ismail");
+        int classId = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.print("Enter Class ID: "); int classId = scanner.nextInt();
-        System.out.print("Enter Member ID: "); int memberId = scanner.nextInt();
-
+        String sqlMember = "INSERT INTO members (name, email, membership_type_id) VALUES (?, ?, ?) RETURNING id";
         String sqlBooking = "INSERT INTO class_bookings (member_id, class_id) VALUES (?, ?)";
-        try (PreparedStatement pstmt = conn.prepareStatement(sqlBooking)) {
-            pstmt.setInt(1, memberId);
-            pstmt.setInt(2, classId);
-            pstmt.executeUpdate();
-            System.out.println("Booking confirmed!");
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        try {
+            int newMemberId = -1;
+            try (PreparedStatement pstmt1 = conn.prepareStatement(sqlMember)) {
+                pstmt1.setString(1, name);
+                pstmt1.setString(2, email);
+                pstmt1.setInt(3, typeId);
+                ResultSet rs = pstmt1.executeQuery();
+                if (rs.next()) newMemberId = rs.getInt(1);
+            }
+
+            if (newMemberId != -1) {
+                try (PreparedStatement pstmt2 = conn.prepareStatement(sqlBooking)) {
+                    pstmt2.setInt(1, newMemberId);
+                    pstmt2.setInt(2, classId);
+                    pstmt2.executeUpdate();
+                    System.out.println("Success! Member registered and booked.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
