@@ -1,4 +1,9 @@
 package exceptions;
 
-public class MembershipExpiredException {
+public class MembershipExpiredException extends Exception {
+
+    public MembershipExpiredException(String message) {
+        super(message);
+    }
 }
+
