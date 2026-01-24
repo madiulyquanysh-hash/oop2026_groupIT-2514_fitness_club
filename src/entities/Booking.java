@@ -2,6 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 
+
 public class Booking {
     private int id;
     private int memberId;
