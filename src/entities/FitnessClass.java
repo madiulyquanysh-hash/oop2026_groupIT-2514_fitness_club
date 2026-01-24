@@ -1,5 +1,6 @@
 package entities;
 
+
 public class FitnessClass {
     private int id;
     private String title;
