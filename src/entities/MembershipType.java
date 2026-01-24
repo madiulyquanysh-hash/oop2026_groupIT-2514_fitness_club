@@ -1,5 +1,6 @@
 package entities;
 
+
 public class MembershipType {
     private int id;
     private String name;
