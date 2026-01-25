@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingRepositoryImpl implements BookingRepository {
+public class class_booking implements BookingRepository {
 
     @Override
     public void add(Booking booking) {
