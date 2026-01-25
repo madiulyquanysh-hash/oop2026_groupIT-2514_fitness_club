@@ -8,11 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class class_bookings implements BookingRepository {
+public class MemberRepository implements BookingRepository {
 
     @Override
     public void add(Booking booking) {
-        String sql = "INSERT INTO bookings(member_id, class_id, booking_date) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO  class_bookings(member_id, class_id, booking_date) VALUES (?, ?, ?)";
 
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -23,7 +23,7 @@ public class class_bookings implements BookingRepository {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error adding booking: " + e.getMessage());
         }
     }
 
@@ -45,7 +45,7 @@ public class class_bookings implements BookingRepository {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error adding booking: " + e.getMessage());
         }
         return bookings;
     }
