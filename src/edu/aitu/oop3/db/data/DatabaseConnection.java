@@ -1,18 +1,30 @@
 package edu.aitu.oop3.db.data;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-public class DatabaseConnection {
-    private static final String URL =
-            "jdbc:postgresql://aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres?sslmode=require";
-    private static final String USER = "postgres.etvnzindnaekughhmyud";
-    private static final String PASSWORD = "09Ku@nysh|M";
+import java.util.Properties;
 
-    private DatabaseConnection() {
-        // no instances
-    }
+public class DatabaseConnection {
+    private static Connection connection = null;
+    private static Properties props = new Properties();
+
+    private DatabaseConnection() {}
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        if (connection == null || connection.isClosed()) {
+            try (FileInputStream in = new FileInputStream("config.properties")) {
+                props.load(in);
+                String url = props.getProperty("db.url");
+                String user = props.getProperty("db.user");
+                String pass = props.getProperty("db.password");
+                connection = DriverManager.getConnection(url, user, pass);
+            } catch (IOException e) {
+                System.err.println("Config file error: " + e.getMessage());
+            }
+        }
+        return connection;
     }
 }
