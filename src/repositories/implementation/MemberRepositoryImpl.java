@@ -11,7 +11,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     public MemberRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
-
+// new
     @Override
     public void addMember(Member member) throws SQLException {
         String sql = "INSERT INTO members (full_name, email, membership_type_id, expiry_date) VALUES (?, ?, ?, ?)";
