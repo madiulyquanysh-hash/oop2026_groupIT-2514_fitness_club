@@ -9,7 +9,7 @@ public class Member {
     private int membershipTypeId;
     private String instructor;
     private Date expiryDate;
-
+    //new
     public Member(int id, String name, String email, int membershipTypeId, String instructor, Date expiryDate) {
         this.id = id;
         this.name = name;
