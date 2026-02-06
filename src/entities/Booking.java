@@ -7,7 +7,7 @@ public class Booking {
     private String classTitle;
     private int classInstructorId;
     private LocalDateTime bookingDate;
-
+// new
     public Booking(int memberId, String classTitle, int classInstructorId, LocalDateTime bookingDate) {
         this.memberId = memberId;
         this.classTitle = classTitle;
