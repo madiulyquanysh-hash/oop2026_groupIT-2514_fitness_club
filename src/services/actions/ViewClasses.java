@@ -1,34 +1,30 @@
 package services.actions;
 
+import edu.aitu.oop3.db.data.DatabaseConnection;
 import entities.FitnessClass;
 import repositories.Repositories.FitnessClassRepository;
+import repositories.implementation.FitnessClassRepositoryImpl;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ViewClasses {
     private final FitnessClassRepository classRepo;
-
-    public ViewClasses(FitnessClassRepository classRepo) {
-        this.classRepo = classRepo;
+    public ViewClasses() throws SQLException {
+        this.classRepo = new FitnessClassRepositoryImpl();
     }
 
     public void show() {
         try {
-            System.out.println("\n--- FITNESS CLASS TABLE ---");
-            List<FitnessClass> classes = classRepo.getAllClasses();
-            if (classes.isEmpty()) {
-                System.out.println("No classes available at the moment.");
-                return;
-            }
+            System.out.println("\n--- CLASSES TABLE ---");
+            List<FitnessClass> classes = classRepo.getAll();
+            classes.stream()
+                    .filter(c -> c.getRemainingCapacity() > 0)
+                    .forEach(c -> System.out.println("Class: " + c.getTitle() +
+                            " | Instructor: " + c.getInstructor() +
+                            " | Seats left: " + c.getRemainingCapacity()));
 
-            for (FitnessClass c : classes) {
-                System.out.println("ID: " + c.getId() +
-                        " | Class: " + c.getTitle() +
-                        " | Instructor: " + c.getInstructor() +
-                        " | Price: " + c.getCost() +
-                        " | Capacity: " + c.getRemainingCapacity() + "/" + c.getCapacity());
-            }
-        } catch (Exception e) {
-            System.out.println("Error displaying schedule: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error loading classes: " + e.getMessage());
         }
     }
 }
