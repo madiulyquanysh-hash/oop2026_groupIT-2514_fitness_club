@@ -11,7 +11,7 @@ public class MembershipType {
         this.price = price;
         this.durationDays = durationDays;
     }
-
+// new
     public MembershipType(int id, String name, double price, int durationDays) {
         this(name, price, durationDays);
         this.id = id;
