@@ -1,5 +1,5 @@
 package repositories.implementation;
-
+//new
 import entities.FitnessClass;
 import repositories.Repositories.FitnessClassRepository;
 import java.sql.*;
