@@ -13,7 +13,7 @@ public class FindMember {
     public FindMember(MemberRepository memberRepo) {
         this.memberRepo = memberRepo;
     }
-
+//new
     public void show() {
         System.out.println("\n--- FIND MEMBER ---");
         System.out.print("Enter Member's Name: ");
