@@ -9,4 +9,4 @@ public interface MemberRepository {
     Member getMemberByEmail(String email) throws SQLException;
     List<Member> getAllMembers() throws SQLException;
     List<Member> searchByName(String name) throws SQLException;
-}
+}//new
