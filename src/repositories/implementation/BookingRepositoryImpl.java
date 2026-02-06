@@ -27,7 +27,7 @@ public class BookingRepositoryImpl implements BookingRepository {
                 upd.setInt(1, classId);
                 upd.executeUpdate();
             }
-
+// connection
             connection.commit();
             System.out.println("Capacity updated and booking saved!");
         } catch (SQLException e) {
