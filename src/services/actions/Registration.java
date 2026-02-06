@@ -1,55 +1,52 @@
 package services.actions;
 
 import entities.Member;
+import services.MembershipFactory;
 import repositories.Repositories.MemberRepository;
 import repositories.Repositories.MembershipTypeRepository;
+import repositories.implementation.MemberRepositoryImpl;
+import repositories.implementation.MembershipTypeRepositoryImpl;
+
 import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Registration {
     private final MemberRepository memberRepo;
-    private final MembershipTypeRepository membershipRepo;
+    private final MembershipTypeRepository typeRepo;
     private final Scanner scanner = new Scanner(System.in);
-    public Registration(MemberRepository memberRepo, MembershipTypeRepository membershipRepo) {
-        this.memberRepo = memberRepo;
-        this.membershipRepo = membershipRepo;
+
+    public Registration() throws SQLException {
+        this.memberRepo = new MemberRepositoryImpl();
+        this.typeRepo = new MembershipTypeRepositoryImpl();
     }
 
-    public void show() {
+    public void execute() {
         System.out.println("\n--- MEMBER REGISTRATION ---");
-        System.out.print("Enter Full Name: ");
-        String fullName = scanner.nextLine();
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
         System.out.print("Enter Email: ");
         String email = scanner.nextLine();
-        System.out.print("Enter Membership Type: ");
+
+        System.out.print("Enter Membership Type  with their ID: ");
         int typeId = scanner.nextInt();
         scanner.nextLine();
 
         try {
-            LocalDate expiryLocalDate;
-            switch (typeId) {
-                case 1, 3 -> {
-                    expiryLocalDate = LocalDate.now().plusMonths(1);
-                }
-                case 2, 4, 5 -> {
-                    expiryLocalDate = LocalDate.now().plusYears(1);
-                }
-                default -> {
-                    System.out.println("Unknown ID. Defaulting to 30 days with Standart-1 membership type.");
-                    expiryLocalDate = LocalDate.now().plusDays(30);
-                }
-            }
+            Date expiryDate = MembershipFactory.calculateExpiryDate(typeId);
+            Member newMember = new Member.Builder()
+                    .setName(name)
+                    .setEmail(email)
+                    .setMembershipTypeId(typeId)
+                    .setExpiryDate(expiryDate)
+                    .build();
 
-            Date expiryDate = Date.valueOf(expiryLocalDate);
-            Member newMember = new Member(0, fullName, email, typeId, null, expiryDate);
-
-            memberRepo.addMember(newMember);
-            System.out.println("Member registered! Expiry date set to: " + expiryDate);
+            memberRepo.add(newMember);
+            System.out.println("Registration successful! Expiry Date: " + expiryDate);
 
         } catch (Exception e) {
             System.out.println("Registration failed: " + e.getMessage());
         }
-
     }
 }
