@@ -6,4 +6,4 @@ import java.util.List;
 
 public interface MembershipTypeRepository {
     List<MembershipType> getAllTypes() throws SQLException;
-}
+}//new
