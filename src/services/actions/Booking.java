@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-public class Booking {
+public class  Booking {
     private final MemberRepository memberRepo;
     private final FitnessClassRepository classRepo;
     private final BookingRepository bookingRepo;
