@@ -7,7 +7,7 @@ public class FitnessClass {
     private double cost;
     private int capacity;
     private int remainingCapacity;
-
+// new
     public FitnessClass(int id, String title, String instructor, double cost, int capacity, int remainingCapacity) {
         this.id = id;
         this.title = title;
