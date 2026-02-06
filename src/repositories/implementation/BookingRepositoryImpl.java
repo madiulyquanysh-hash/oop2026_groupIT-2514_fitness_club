@@ -21,7 +21,7 @@ public class BookingRepositoryImpl implements BookingRepository {
                 ins.setInt(2, classId);
                 ins.executeUpdate();
             }
-
+//new
             String updateSql = "UPDATE classes SET remaining_capacity = remaining_capacity - 1 WHERE id = ?";
             try (PreparedStatement upd = connection.prepareStatement(updateSql)) {
                 upd.setInt(1, classId);
