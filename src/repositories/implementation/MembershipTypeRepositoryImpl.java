@@ -12,7 +12,7 @@ public class MembershipTypeRepositoryImpl implements MembershipTypeRepository {
     public MembershipTypeRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
-
+//new
     @Override
     public List<MembershipType> getAllTypes() throws SQLException {
         List<MembershipType> types = new ArrayList<>();
