@@ -22,7 +22,7 @@ public class  Booking {
         this.classRepo = classRepo;
         this.bookingRepo = bookingRepo;
     }
-
+// new
     public void show() {
         try {
             System.out.println("\n--- BOOKING A CLASS ---");
